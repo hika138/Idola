@@ -18,6 +18,9 @@ class Summary(commands.Cog):
     async def summary(self, ctx: discord.Interaction, start: str, end: str):
         # メッセージの取得
         await ctx.response.defer()
+        if not start.isdecimal() or not end.isdecimal():
+            await ctx.followup.send("メッセージIDは数字で指定してください。")
+            return
         try:
             start_message = await ctx.channel.fetch_message(int(start))
             end_message = await ctx.channel.fetch_message(int(end))
