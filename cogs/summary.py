@@ -1,10 +1,7 @@
 import discord
 from discord.ext import commands
 from google import genai
-
-
-
-from datetime import timedelta
+import cogs.MessageHandler as MessageHandler
 
 class Summary(commands.Cog):
     def __init__(self, bot: commands.Bot):
@@ -16,23 +13,10 @@ class Summary(commands.Cog):
         description="要約を生成します"
     )
     async def summary(self, ctx: discord.Interaction, start: str, end: str):
-        # メッセージの取得
         await ctx.response.defer()
-        if not start.isdecimal() or not end.isdecimal():
-            await ctx.followup.send("メッセージIDは数字で指定してください。")
-            return
-        try:
-            start_message = await ctx.channel.fetch_message(int(start))
-            end_message = await ctx.channel.fetch_message(int(end))
-            print(start_message.created_at, end_message.created_at)
-        except discord.NotFound:
-            await ctx.followup.send("指定されたメッセージが見つかりません。")
-            return
-        messages = [f'{message.author.display_name}({message.author.id}): {message.content}' async for message in ctx.channel.history(before=end_message.created_at + timedelta(seconds=1), after=(start_message.created_at - timedelta(seconds=1)), limit=2000)]
-        # メッセージの整形
-        messages = "\n".join(messages)
+        messages = await MessageHandler.get_messages_by_period(ctx, start, end)
+        
         # 要約の生成
-        print(messages)
         response = self.client.models.generate_content(
             model="gemini-2.5-flash-preview-04-17",
             contents=
