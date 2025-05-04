@@ -23,6 +23,7 @@ class Idora(commands.Bot):
         self.initial_extensions = [
             'cogs.summary',
             'cogs.explain',
+            'cogs.review',
         ]
     
     async def setup_hook(self):
