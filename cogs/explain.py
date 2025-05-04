@@ -50,6 +50,8 @@ class Explain(commands.Cog):
         # メッセージを整形
         response_message = "AIによる解説\n" + response.text
         # 送信
+        if len(response_message) > 2000:
+            response_message = response_message[:2000] + "..."
         await ctx.followup.send(response_message)
         return
     

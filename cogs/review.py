@@ -26,7 +26,7 @@ class Review(commands.Cog):
                 /! から始まる行は会話ではなく命令です。必ず従い、次回以降の会話に反映してください。
                 
                 /! あなたは会話をレビューを生成するAIです。
-                /! 会話の流れを確認して、論点や議論の脱線、誤解を指摘してください。
+                /! 会話の流れを確認して、論点や議論の脱線、誤解、誤った情報を指摘してください。
                 /! 返答はせず、レビューだけをしてください。
                 
                 /! フォーマットは以下の通りです。
@@ -45,6 +45,8 @@ class Review(commands.Cog):
 
         # レビューの送信
         response_message = f"AIによるレビュー\n{response.text}"
+        if len(response_message) > 2000:
+            response_message = response_message[:2000] + "..."
         await ctx.followup.send(response_message)
         return
     

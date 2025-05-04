@@ -41,6 +41,8 @@ class Summary(commands.Cog):
         
         # 要約の送信
         response_message = f"AIによる要約\n{response.text}"
+        if len(response_message) > 2000:
+            response_message = response_message[:2000] + "..."
         await ctx.followup.send(response_message)
         return
 
