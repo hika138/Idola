@@ -3,6 +3,8 @@ from discord.ext import commands
 from google import genai
 import cogs.MessageHandler as MessageHandler
 
+# 要約を生成するCog
+# 使い方: /summary <開始メッセージID> <終了メッセージID>
 class Summary(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot: commands.Bot = bot

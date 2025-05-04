@@ -3,6 +3,8 @@ from discord.ext import commands
 from google import genai
 from google.genai import types
 
+# 解説を生成するCog
+# 使い方: /explain <内容>
 class Explain(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot: commands.Bot = bot
