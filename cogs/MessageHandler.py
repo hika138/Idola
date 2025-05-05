@@ -52,7 +52,7 @@ async def get_messages_by_period(ctx: discord.Interaction, start: str, end: str)
         return_messages = return_messages[:2000] + "..."
     return return_messages, images
 
-def load_image_from_url(image_url: str) -> Image.Image | None:
+def load_images_from_url(image_url: str) -> Image.Image | None:
     """
     指定されたURLから画像をダウンロードし、PIL Imageオブジェクトとして読み込みます。
 
@@ -67,11 +67,9 @@ def load_image_from_url(image_url: str) -> Image.Image | None:
         response.raise_for_status()  # HTTPエラーが発生した場合に例外を発生させる
         img = Image.open(BytesIO(response.content))
         return img
-    except requests.exceptions.RequestException as e:
-        print(f"画像のダウンロードに失敗しました {image_url}: {e}")
+    except requests.exceptions.RequestException:
         return None
-    except IOError as e:
-        print(f"画像の読み込みに失敗しました {image_url}: {e}")
+    except IOError:
         return None
 
 def load_images_from_urls(image_urls: list[str]) -> list[Image.Image]:
@@ -86,7 +84,7 @@ def load_images_from_urls(image_urls: list[str]) -> list[Image.Image]:
     """
     images = []
     for url in image_urls:
-        img = load_image_from_url(url)
+        img = load_images_from_url(url)
         if img:
             images.append(img)
     return images
