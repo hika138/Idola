@@ -16,7 +16,7 @@ class Summary(commands.Cog):
         try:
             await ctx.response.defer()
         except discord.errors.NotFound:
-            await ctx.followup.send("インタラクションがタイムアウトしました。")
+            await ctx.edit_original_response("インタラクションがタイムアウトしました。")
             return
             
         messages, images = await MessageHandler.get_messages_by_period(ctx, start, end)
