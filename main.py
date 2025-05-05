@@ -7,7 +7,7 @@ from os.path import join, dirname
 from dotenv import load_dotenv
 
 # botのクラス
-class Idora(commands.Bot):
+class Idola(commands.Bot):
     def __init__(self):
         super().__init__(
             intents=intents,
@@ -48,5 +48,5 @@ GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')
 intents = discord.Intents.default()
 intents.message_content = True
 
-bot = Idora()
+bot = Idola()
 bot.run(DISCORD_TOKEN)
