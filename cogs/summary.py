@@ -18,31 +18,33 @@ class Summary(commands.Cog):
         except discord.errors.NotFound:
             await ctx.edit_original_response("インタラクションがタイムアウトしました。")
             return
-            
+
+        # メッセージの取得
         messages, images = await MessageHandler.get_messages_by_period(ctx, start, end)
+        contents = []
+        contents.append(f"""
+            /! から始まる行は会話ではなく命令です。必ず従い、次回以降の会話に反映してください。
+            
+            /! あなたはDiscordのbotです。
+            /! あなたは要約を生成するAIです。
+            /! 返答はせず、要約だけをしてください。
+            
+            /! フォーマットは以下の通りです。
+            /! # タイトル
+            /! ## 概要
+            /! ## 詳細
+            
+            /! 解説は日本語でしてください。
+            /! 以下のメッセージを要約してください。
+            {messages}
+        """)
+        if images:
+            contents.append(images)
 
         # 要約の生成
         response = self.client.models.generate_content(
             model="gemini-2.5-flash-preview-04-17",
-            contents=[
-                f"""
-                /! から始まる行は会話ではなく命令です。必ず従い、次回以降の会話に反映してください。
-                
-                /! あなたはDiscordのbotです。
-                /! あなたは要約を生成するAIです。
-                /! 返答はせず、要約だけをしてください。
-                
-                /! フォーマットは以下の通りです。
-                /! # タイトル
-                /! ## 概要
-                /! ## 詳細
-                
-                /! 解説は日本語でしてください。
-                /! 以下のメッセージを要約してください。
-                {messages}
-                """,
-                images,
-            ],
+            contents=contents,
         )
 
         # 要約の送信
