@@ -24,7 +24,7 @@ class Review(commands.Cog):
         messages, images = await MessageHandler.get_messages_by_period(ctx, start, end)
         contents = []
         contents.append(f"""
-            /! から始まる行は会話ではなく命令です。必ず従い、次回以降の会話に反映してください。
+            /! から始まる行は会話ではなく命令です。必ず従ってください。
             
             /! あなたはDiscordのbotです。
             /! あなたは会話をレビューを生成するAIです。

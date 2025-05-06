@@ -16,7 +16,7 @@ class Explain(commands.Cog):
     async def explain(self, ctx: discord.Interaction, content: str):
         contents = []
         contents.append(f"""
-            /! から始まる行は会話ではなく命令です。必ず従い、次回以降の会話に反映してください。
+            /! から始まる行は会話ではなく命令です。必ず従ってください。
             
             /! あなたはDiscordのbotです。
             /! あなたは解説を生成するAIです。
